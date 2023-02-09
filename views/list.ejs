@@ -8,11 +8,18 @@
   </head>
   <body>
     <h1>It's a <%= kinfOfDay %> !</h1>
+    <ul>
+      <li>Code</li>
+      <li>Drink coffee</li>
+      <li>Dance</li>
 
-    <% if (kinfOfDay === "Saturday" || kinfOfDay === "Sunday") {%>
-    <h1 style="color: purple"><%= kinfOfDay %> ToDolist</h1>
-    <% } else { %>
-    <h1 style="color: blue"><%= kinfOfDay %> ToDolist</h1>
-    <% } %>
+      <% for(var i = 0; i < newListItems; i++){ %>
+      <li><%= newListItems[i] %></li>
+      <% } %>
+      <form action="/" method="post">
+        <input type="text" name="newItem" />
+        <button type="submit" name="button">Add</button>
+      </form>
+    </ul>
   </body>
 </html>

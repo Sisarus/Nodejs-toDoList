@@ -4,28 +4,37 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-
 //parse application
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('view engine', 'ejs')
 
+// To do Items
+
+var items = [];
+
+
 app.get("/", (req, res) => {
 
   var today = new Date();
-  var currentDay = today.getDay();
 
-  var weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var options = {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  };
 
-  var day = weekDays[currentDay];
+  var day = today.toLocaleDateString("en-GB", options);
 
-  if(currentDay ===  6 || currentDay ===  0){
-    day = weekDays
-    res.write("<h1>Its weekend</h1>");
-  } else {
-    res.render('list', {kinfOfDay: day});
-  }
+  res.render('list', {kinfOfDay: day, newListItems: items});
+});
 
+app.post('/', (req, res)=> {
+  var item = req.body.newItem;
+
+  items.push(item);
+  
+  res.redirect("/");
 });
 
 
