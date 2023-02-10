@@ -9,7 +9,7 @@ npm i
 ## Run
 
 ```
-nodemon app.js
+node app.js
 ```
 
 ### Read more
