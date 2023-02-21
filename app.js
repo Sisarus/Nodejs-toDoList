@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
+const _ = require('lodash');
 
 mongoose.set('strictQuery', true);
 
@@ -11,7 +11,7 @@ const port = 3000;
 //parse application
 app.use(bodyParser.urlencoded({extended: true}));
 // Express use local files in public
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs')
 
@@ -104,10 +104,11 @@ app.post("/delete", (req, res)=> {
   } else {
     List.findOne({name:listName}, function(err, foundList){
       if(!err){
-        foundList.items.pull({ _id: checkedItemID }); 
-        foundList.save(function(){
-          res.redirect("/" + listName);
-        });
+        foundList.items.pull({ _id: checkedItemID });
+
+        foundList.save();
+
+        res.redirect("/" + listName);
       }
     });
   }
@@ -116,7 +117,7 @@ app.post("/delete", (req, res)=> {
 
 // creates custom list
 app.get('/:customListName', (req, res)=> {
-  const customListName = req.params.customListName;
+  const customListName = _.capitalize(req.params.customListName);
 
   // Check if list exist
   List.findOne({name: customListName}, (err, foundList)=>{
