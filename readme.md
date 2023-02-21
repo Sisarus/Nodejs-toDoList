@@ -14,6 +14,12 @@ npm i
 node app.js
 ```
 
+## Run dev nodemon
+
+```
+nodemon app.js
+```
+
 ### Read more
 
 [EJS Templates](https://ejs.co/)

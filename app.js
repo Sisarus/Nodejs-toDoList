@@ -89,7 +89,19 @@ app.post("/delete", (req, res)=> {
 // creates custom list
 app.get('/:customListName', (req, res)=> {
   const customListName = req.params.customListName;
-   const list = new List({
+
+  // Check if list exist
+  List.findOne({name: customListName}, (err, foundList)=>{
+    if(!err){
+      if(!foundList){
+        console.log("Doesnt exist!");
+      } else{
+        console.log("Exist");
+      }
+    }
+  })
+
+  const list = new List({
     name: customListName,
     items: defaultItems //add default data
    });
