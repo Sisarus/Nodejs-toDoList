@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-const date = require(__dirname + "/date.js");
+const mongoose = require("mongoose");
 
 const app = express();
 const port = 3000;
@@ -12,53 +12,90 @@ app.use(express.static("public"));
 
 app.set('view engine', 'ejs')
 
-// To do Items
+mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
 
-var items = [];
-var workItems = [];
+const itemSchema = {
+  name: String
+};
 
+const Item = mongoose.model("Item", itemSchema);
 
+//Default data
+const coffee = new Item({name: "Drink Coffee"});
+const dance = new Item({name: "Go dance"});
+const ama = new Item({name: "Get Ama"});
+const defaultItems = [coffee, dance, ama];
+
+// Custom todo list 
+const listSchema = {
+  name: String,
+  items: [itemSchema]
+};
+
+// For creating custom todo models 
+const List = mongoose.model('List', listSchema);
+
+Item.insertMany(defaultItems, (err)=> {
+  if(err){
+    console.log(err);
+  } else{
+    console.log("Successfully saved default items to DB.");
+  }
+});
+
+// get base todo list
 app.get("/", (req, res) => {
 
-  var day = date.getDate();
+  Item.find({}, (err, foundItems)=> {
 
-  res.render('list', {listTitle: day, newListItems: items});
+    if(foundItems.length === 0) {
+      Item.insertMany(defaultItems, (err)=> {
+        if(err){
+          console.log(err);
+        } else{
+          console.log("Successfully saved default items to DB.");
+        }
+      });
+    } else {
+      res.render('list', {listTitle: "Today", newListItems: foundItems});
+    }
+  });
 });
 
+// post new todo task
 app.post('/', (req, res)=> {
-  var item = req.body.newItem;
+  var itemName = req.body.newItem;
 
-  if(req.body.list === "Work"){
-    if(item.length != 0){
-      workItems.push(item);
+  const item = new Item({
+    name: itemName
+  });
+
+  item.save();
+  res.redirect("/");
+});
+
+// Delete todo task
+app.post("/delete", (req, res)=> {
+  var checkedItemId = req.body.checkbox;
+
+  Item.findByIdAndDelete(checkedItemId, (err)=>{
+    if(!err){
+      res.redirect("/");
     }
-    res.redirect("/work");
-  } else{
-    if(item.length != 0){
-      items.push(item);
-    }
-    res.redirect("/");
-  }
+  });
+
 });
 
-app.post("/del", (req, res)=>{
-  var deleteItem = req.body.del;
+// creates custom list
+app.get('/:customListName', (req, res)=> {
+  const customListName = req.params.customListName;
+   const list = new List({
+    name: customListName,
+    items: defaultItems //add default data
+   });
 
-  if(req.body.list === "Work"){
-    workItems.splice(deleteItem, 1);
-    res.redirect("/work");
-  } else {
-    items.splice(deleteItem, 1);
-    res.redirect("/");
-  }
-});
+   list.save();
 
-app.get("/about", (req, res)=>{
-  res.render('about');
-});
-
-app.get("/work", (req, res) => {
-  res.render('list', {listTitle: "Work List", newListItems: workItems});
 });
 
 app.listen(port, () => {
