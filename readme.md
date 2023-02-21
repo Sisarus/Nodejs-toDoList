@@ -14,18 +14,24 @@ npm i
 node app.js
 ```
 
-## Run dev nodemon
+## Run dev
 
 ```
-nodemon app.js
+npm run serve
+```
+Added package.json
+```
+"scripts": {
+    "serve": "nodemon server.js"
+  },
 ```
 
 ### Read more
 
 [EJS Templates](https://ejs.co/)
 
+## Need NoSQL to work
 
-## Need NoSQL to work 
 Install https://www.mongodb.com/try/download/community
 
 ### Add .bash for MongoDB
