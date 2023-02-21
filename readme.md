@@ -14,17 +14,12 @@ npm i
 node app.js
 ```
 
-## Run dev
+## Run dev if nodomon 
 
 ```
-npm run serve
+nodemon app.js
 ```
-Added package.json
-```
-"scripts": {
-    "serve": "nodemon server.js"
-  },
-```
+
 
 ### Read more
 
