@@ -68,24 +68,49 @@ app.get("/", (req, res) => {
 // post new todo task
 app.post('/', (req, res)=> {
   var itemName = req.body.newItem;
+  var listName = req.body.list;
 
   const item = new Item({
     name: itemName
   });
 
-  item.save();
-  res.redirect("/");
+  console.log(listName + " " + itemName)
+
+  if(listName === "Today") {
+    item.save();
+    res.redirect("/");
+  } else {
+    List.findOne({name: listName}, (err, foundList)=>{
+      if(!err){
+        foundList.items.push(item);
+        foundList.save();
+        res.redirect("/" + listName);
+      }
+    });
+  }
 });
 
 // Delete todo task
 app.post("/delete", (req, res)=> {
-  var checkedItemId = req.body.checkbox;
+  var checkedItemID = req.body.checkbox;
+  var listName = req.body.listName;
 
-  Item.findByIdAndDelete(checkedItemId, (err)=>{
-    if(!err){
-      res.redirect("/");
-    }
-  });
+  if(listName === "Today") {
+    Item.findByIdAndDelete(checkedItemID, (err)=>{
+      if(!err){
+        res.redirect("/");
+      }
+    });
+  } else {
+    List.findOne({name:listName}, function(err, foundList){
+      if(!err){
+        foundList.items.pull({ _id: checkedItemID }); 
+        foundList.save(function(){
+          res.redirect("/" + listName);
+        });
+      }
+    });
+  }
 
 });
 

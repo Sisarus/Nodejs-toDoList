@@ -1,4 +1,8 @@
-# To Do List
+# Todo List
+
+EJS
+NodeJS
+JavaScript
 
 notes for me
 
@@ -14,12 +18,14 @@ npm i
 node app.js
 ```
 
-## Run dev if nodomon 
+http://localhost:3000/
+http://localhost:3000/:yourTodo
+
+## Run dev if nodomon
 
 ```
 nodemon app.js
 ```
-
 
 ### Read more
 
@@ -43,3 +49,13 @@ look fot help_data -> environment_variable.jpg
 
 run every vere CMD -> mongosh
 run every vere CMD -> mongod
+
+### MongoDB
+
+show dbs
+
+use database_name
+
+db
+
+db.dropDatabase()
