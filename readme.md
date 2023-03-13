@@ -21,7 +21,7 @@ node app.js
 http://localhost:3000/
 http://localhost:3000/:yourTodo
 
-## Run dev if nodomon
+## Run dev if nodemon
 
 ```
 nodemon app.js
