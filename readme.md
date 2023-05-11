@@ -15,7 +15,7 @@ npm i
 ## Run
 
 ```
-node app.js
+npm start
 ```
 
 http://localhost:3000/
