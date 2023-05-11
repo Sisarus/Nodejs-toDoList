@@ -29,7 +29,7 @@ npm run dev
 ## Project Links
 
 * Opens to [localhost](http://localhost:3000)
-* http://localhost:3000/:yourTodo [Create own task list with params](http://localhost:3000/My Own list)
+* http://localhost:3000/:yourTodo [Create own task list with params](http://localhost:3000/MyOwnlist)
 
 ## Features
 List the ready features here:
