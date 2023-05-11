@@ -1,31 +1,48 @@
-# Todo List
+# Simple Todo List with EJS and backend Express
 
-EJS
-NodeJS
-JavaScript
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Project Links](#project-links)
+* [Features](#features)
+* [Project Status](#project-status)
+* [Read more](#read-more)
 
-notes for me
+## General info
+Todo list backend with task. 
 
-## Install
+## Technologies
+Project is created with:
+ * Express
+ * EJS
 
+## Setup
+To run this project, install it locally using npm:
 ```
-npm i
+git clone https://github.com/Sisarus/Nodejs-todoList.git
+cd .\Nodejs-todoList\
+npm install
+npm run dev
 ```
 
-## Run
+## Project Links
 
-```
-npm start
-```
+* Opens to [localhost](http://localhost:3000)
+* http://localhost:3000/:yourTodo [Create own task list with params](http://localhost:3000/My Own list)
 
-http://localhost:3000/
-http://localhost:3000/:yourTodo
+## Features
+List the ready features here:
 
-## Run dev if nodemon
+ * Find all tasks
+ * Add task
+ * delete task
+ * Create new task list
 
-```
-nodemon app.js
-```
+## Project Status
+Project is: complete
+
+<!-- in progress / complete / no longer being worked on. If you are no longer working on it, provide reasons why. -->
 
 ### Read more
 
